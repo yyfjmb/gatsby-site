@@ -1,21 +1,49 @@
 import React from "react"
-import { Link } from "gatsby"
+import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1 className="title">Hi everyone</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+class IndexComponent extends React.Component {
+  render() {
+    const data = this.props.data.allLettersCsv.edges
+    return (
+      <Layout>
+        <SEO title="Home" />
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Letter</th>
+                <th>ASCII Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((row, i) => (
+                <tr key={`${row.node.value} ${i}`}>
+                  <td>{row.node.letter}</td>
+                  <td>{row.node.value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Layout>
+    )
+  }
+}
 
-export default IndexPage
+export default IndexComponent
+
+export const IndexQuery = graphql`
+  query {
+    allLettersCsv {
+      edges {
+        node {
+          letter
+          value
+        }
+      }
+    }
+  }
+`
