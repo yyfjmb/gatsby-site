@@ -5,10 +5,10 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
-    `gatsby-transformer-csv`,
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-remark`,
     `gatsby-plugin-sass`,
+    `gatsby-plugin-netlify-cms`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
